@@ -1,0 +1,6 @@
+PM4Py Validation Summary
+=======================
+XES File: data/output/merged_routes.xes
+Trace Count: 2823
+Event Count: 49534
+Variant Count: 42

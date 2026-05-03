@@ -15,6 +15,3 @@ env/
 
 # Matplotlib cache (local project folder)
 .mplconfig/
-
-# Generated PM4Py visualization outputs (regenerate with code/task2/pm4py_task2_evidence.py)
-data/intermediate/task2_pm4py_evidence/
