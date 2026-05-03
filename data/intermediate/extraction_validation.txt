@@ -1,0 +1,10 @@
+Task 1 Extraction Validation
+============================
+PDF files scanned: 43
+Clock-time tokens found in PDFs: 101891
+Rows in routes.csv: 49534
+Non-empty arrival_time values in routes.csv: 49534
+Non-empty departure_time values in routes.csv: 49534
+
+Interpretation: PDFs contain time values. 
+If arrival/departure columns are low/empty, improve parser rules for your route PDF layout.

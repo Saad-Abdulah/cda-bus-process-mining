@@ -1,0 +1,11 @@
+Task 2 XES Validation Report
+============================
+XES file: data/output/merged_routes.xes
+Validation result: PASS
+xes.version: 1.0
+Extensions: 3
+Classifiers: 2
+Trace count: 2823
+Event count: 49534
+Timestamp format check: PASS (ISO 8601 with timezone)
+Attribute type checks: PASS (string/int/date)
