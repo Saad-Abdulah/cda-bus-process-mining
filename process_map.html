@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 700px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Nust Metro Station", "label": "Nust Metro Station", "shape": "dot", "size": 15, "title": "Stop: Nust Metro Station"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Police Foundation Metro Station", "label": "Police Foundation Metro Station", "shape": "dot", "size": 15, "title": "Stop: Police Foundation Metro Station"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "NPA Stop", "label": "NPA Stop", "shape": "dot", "size": 15, "title": "Stop: NPA Stop"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Islamic University", "label": "Islamic University", "shape": "dot", "size": 15, "title": "Stop: Islamic University"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "FAST University", "label": "FAST University", "shape": "dot", "size": 15, "title": "Stop: FAST University"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "PAEC General Hospital", "label": "PAEC General Hospital", "shape": "dot", "size": 15, "title": "Stop: PAEC General Hospital"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "NPA", "label": "NPA", "shape": "dot", "size": 15, "title": "Stop: NPA"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "IMC Hospital", "label": "IMC Hospital", "shape": "dot", "size": 15, "title": "Stop: IMC Hospital"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Metro CNC", "label": "Metro CNC", "shape": "dot", "size": 15, "title": "Stop: Metro CNC"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Sabzi Mandi", "label": "Sabzi Mandi", "shape": "dot", "size": 15, "title": "Stop: Sabzi Mandi"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Mandi Morh", "label": "Mandi Morh", "shape": "dot", "size": 15, "title": "Stop: Mandi Morh"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Kurang Road Stop", "label": "Kurang Road Stop", "shape": "dot", "size": 15, "title": "Stop: Kurang Road Stop"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "IESCO", "label": "IESCO", "shape": "dot", "size": 15, "title": "Stop: IESCO"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "PTCL I-10", "label": "PTCL I-10", "shape": "dot", "size": 15, "title": "Stop: PTCL I-10"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Kurang Road", "label": "Kurang Road", "shape": "dot", "size": 15, "title": "Stop: Kurang Road"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Sui Gas Stop", "label": "Sui Gas Stop", "shape": "dot", "size": 15, "title": "Stop: Sui Gas Stop"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "OGTI Stop", "label": "OGTI Stop", "shape": "dot", "size": 15, "title": "Stop: OGTI Stop"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "CDA Complain Center", "label": "CDA Complain Center", "shape": "dot", "size": 15, "title": "Stop: CDA Complain Center"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "MCI Model School", "label": "MCI Model School", "shape": "dot", "size": 15, "title": "Stop: MCI Model School"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Khanna Pul", "label": "Khanna Pul", "shape": "dot", "size": 15, "title": "Stop: Khanna Pul"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Zia Masjid", "label": "Zia Masjid", "shape": "dot", "size": 15, "title": "Stop: Zia Masjid"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Kuri Road", "label": "Kuri Road", "shape": "dot", "size": 15, "title": "Stop: Kuri Road"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Iqbal Town", "label": "Iqbal Town", "shape": "dot", "size": 15, "title": "Stop: Iqbal Town"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Dhok Kala Khan", "label": "Dhok Kala Khan", "shape": "dot", "size": 15, "title": "Stop: Dhok Kala Khan"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Sohan", "label": "Sohan", "shape": "dot", "size": 15, "title": "Stop: Sohan"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Faizabad", "label": "Faizabad", "shape": "dot", "size": 15, "title": "Stop: Faizabad"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "IJP Metro Station", "label": "IJP Metro Station", "shape": "dot", "size": 15, "title": "Stop: IJP Metro Station"}, {"color": "#0d6efd", "font": {"color": "#000000"}, "id": "Potohar Metro Station", "label": "Potohar Metro Station", "shape": "dot", "size": 15, "title": "Stop: Potohar Metro Station"}]);
+                  edges = new vis.DataSet([{"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Nust Metro Station", "label": "1 min 50 sec", "title": "Transition: Nust Metro Station \u2192 Police Foundation Metro Station\nTrips (Case Frequency): 17\nAvg Time: 1 min 50 sec", "to": "Police Foundation Metro Station", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Police Foundation Metro Station", "label": "2 min 50 sec", "title": "Transition: Police Foundation Metro Station \u2192 NPA Stop\nTrips (Case Frequency): 17\nAvg Time: 2 min 50 sec", "to": "NPA Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Police Foundation Metro Station", "label": "2 min 30 sec", "title": "Transition: Police Foundation Metro Station \u2192 Nust Metro Station\nTrips (Case Frequency): 16\nAvg Time: 2 min 30 sec", "to": "Nust Metro Station", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "NPA Stop", "label": "2 min 40 sec", "title": "Transition: NPA Stop \u2192 Islamic University\nTrips (Case Frequency): 17\nAvg Time: 2 min 40 sec", "to": "Islamic University", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Islamic University", "label": "2 min 11 sec", "title": "Transition: Islamic University \u2192 FAST University\nTrips (Case Frequency): 33\nAvg Time: 2 min 11 sec", "to": "FAST University", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "FAST University", "label": "2 min 40 sec", "title": "Transition: FAST University \u2192 PAEC General Hospital\nTrips (Case Frequency): 17\nAvg Time: 2 min 40 sec", "to": "PAEC General Hospital", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "FAST University", "label": "2 min 10 sec", "title": "Transition: FAST University \u2192 NPA\nTrips (Case Frequency): 16\nAvg Time: 2 min 10 sec", "to": "NPA", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "PAEC General Hospital", "label": "2 min 5 sec", "title": "Transition: PAEC General Hospital \u2192 IMC Hospital\nTrips (Case Frequency): 17\nAvg Time: 2 min 5 sec", "to": "IMC Hospital", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "PAEC General Hospital", "label": "2 min 50 sec", "title": "Transition: PAEC General Hospital \u2192 Islamic University\nTrips (Case Frequency): 16\nAvg Time: 2 min 50 sec", "to": "Islamic University", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "IMC Hospital", "label": "2 min 40 sec", "title": "Transition: IMC Hospital \u2192 Metro CNC\nTrips (Case Frequency): 17\nAvg Time: 2 min 40 sec", "to": "Metro CNC", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "IMC Hospital", "label": "1 min 10 sec", "title": "Transition: IMC Hospital \u2192 PAEC General Hospital\nTrips (Case Frequency): 16\nAvg Time: 1 min 10 sec", "to": "PAEC General Hospital", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Metro CNC", "label": "1 min 40 sec", "title": "Transition: Metro CNC \u2192 Sabzi Mandi\nTrips (Case Frequency): 17\nAvg Time: 1 min 40 sec", "to": "Sabzi Mandi", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Metro CNC", "label": "2 min 40 sec", "title": "Transition: Metro CNC \u2192 IMC Hospital\nTrips (Case Frequency): 16\nAvg Time: 2 min 40 sec", "to": "IMC Hospital", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Sabzi Mandi", "label": "2 min 50 sec", "title": "Transition: Sabzi Mandi \u2192 Mandi Morh\nTrips (Case Frequency): 17\nAvg Time: 2 min 50 sec", "to": "Mandi Morh", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Sabzi Mandi", "label": "2 min 40 sec", "title": "Transition: Sabzi Mandi \u2192 Metro CNC\nTrips (Case Frequency): 16\nAvg Time: 2 min 40 sec", "to": "Metro CNC", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Mandi Morh", "label": "1 min 45 sec", "title": "Transition: Mandi Morh \u2192 Kurang Road Stop\nTrips (Case Frequency): 17\nAvg Time: 1 min 45 sec", "to": "Kurang Road Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Mandi Morh", "label": "1 min 30 sec", "title": "Transition: Mandi Morh \u2192 Sabzi Mandi\nTrips (Case Frequency): 16\nAvg Time: 1 min 30 sec", "to": "Sabzi Mandi", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Kurang Road Stop", "label": "2 min 0 sec", "title": "Transition: Kurang Road Stop \u2192 IESCO\nTrips (Case Frequency): 17\nAvg Time: 2 min 0 sec", "to": "IESCO", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "IESCO", "label": "1 min 50 sec", "title": "Transition: IESCO \u2192 PTCL I-10\nTrips (Case Frequency): 17\nAvg Time: 1 min 50 sec", "to": "PTCL I-10", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "IESCO", "label": "2 min 40 sec", "title": "Transition: IESCO \u2192 Kurang Road\nTrips (Case Frequency): 16\nAvg Time: 2 min 40 sec", "to": "Kurang Road", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "PTCL I-10", "label": "1 min 45 sec", "title": "Transition: PTCL I-10 \u2192 Sui Gas Stop\nTrips (Case Frequency): 17\nAvg Time: 1 min 45 sec", "to": "Sui Gas Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "PTCL I-10", "label": "1 min 50 sec", "title": "Transition: PTCL I-10 \u2192 IESCO\nTrips (Case Frequency): 16\nAvg Time: 1 min 50 sec", "to": "IESCO", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Sui Gas Stop", "label": "5 min 50 sec", "title": "Transition: Sui Gas Stop \u2192 OGTI Stop\nTrips (Case Frequency): 17\nAvg Time: 5 min 50 sec", "to": "OGTI Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Sui Gas Stop", "label": "2 min 30 sec", "title": "Transition: Sui Gas Stop \u2192 PTCL I-10\nTrips (Case Frequency): 16\nAvg Time: 2 min 30 sec", "to": "PTCL I-10", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "OGTI Stop", "label": "4 min 10 sec", "title": "Transition: OGTI Stop \u2192 CDA Complain Center\nTrips (Case Frequency): 17\nAvg Time: 4 min 10 sec", "to": "CDA Complain Center", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "OGTI Stop", "label": "1 min 40 sec", "title": "Transition: OGTI Stop \u2192 Sui Gas Stop\nTrips (Case Frequency): 16\nAvg Time: 1 min 40 sec", "to": "Sui Gas Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "CDA Complain Center", "label": "5 min 25 sec", "title": "Transition: CDA Complain Center \u2192 MCI Model School\nTrips (Case Frequency): 17\nAvg Time: 5 min 25 sec", "to": "MCI Model School", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "CDA Complain Center", "label": "2 min 10 sec", "title": "Transition: CDA Complain Center \u2192 OGTI Stop\nTrips (Case Frequency): 16\nAvg Time: 2 min 10 sec", "to": "OGTI Stop", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "MCI Model School", "label": "2 min 0 sec", "title": "Transition: MCI Model School \u2192 CDA Complain Center\nTrips (Case Frequency): 16\nAvg Time: 2 min 0 sec", "to": "CDA Complain Center", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Khanna Pul", "label": "2 min 48 sec", "title": "Transition: Khanna Pul \u2192 Zia Masjid\nTrips (Case Frequency): 16\nAvg Time: 2 min 48 sec", "to": "Zia Masjid", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Zia Masjid", "label": "2 min 20 sec", "title": "Transition: Zia Masjid \u2192 Kuri Road\nTrips (Case Frequency): 16\nAvg Time: 2 min 20 sec", "to": "Kuri Road", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Kuri Road", "label": "2 min 0 sec", "title": "Transition: Kuri Road \u2192 Iqbal Town\nTrips (Case Frequency): 16\nAvg Time: 2 min 0 sec", "to": "Iqbal Town", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Iqbal Town", "label": "1 min 55 sec", "title": "Transition: Iqbal Town \u2192 Dhok Kala Khan\nTrips (Case Frequency): 16\nAvg Time: 1 min 55 sec", "to": "Dhok Kala Khan", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Dhok Kala Khan", "label": "2 min 0 sec", "title": "Transition: Dhok Kala Khan \u2192 Sohan\nTrips (Case Frequency): 16\nAvg Time: 2 min 0 sec", "to": "Sohan", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Sohan", "label": "3 min 0 sec", "title": "Transition: Sohan \u2192 Faizabad\nTrips (Case Frequency): 16\nAvg Time: 3 min 0 sec", "to": "Faizabad", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Faizabad", "label": "2 min 30 sec", "title": "Transition: Faizabad \u2192 IJP Metro Station\nTrips (Case Frequency): 16\nAvg Time: 2 min 30 sec", "to": "IJP Metro Station", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "IJP Metro Station", "label": "4 min 40 sec", "title": "Transition: IJP Metro Station \u2192 Potohar Metro Station\nTrips (Case Frequency): 16\nAvg Time: 4 min 40 sec", "to": "Potohar Metro Station", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Potohar Metro Station", "label": "2 min 10 sec", "title": "Transition: Potohar Metro Station \u2192 MCI Model School\nTrips (Case Frequency): 16\nAvg Time: 2 min 10 sec", "to": "MCI Model School", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "Kurang Road", "label": "3 min 0 sec", "title": "Transition: Kurang Road \u2192 Mandi Morh\nTrips (Case Frequency): 16\nAvg Time: 3 min 0 sec", "to": "Mandi Morh", "width": 2}, {"arrows": {"to": {"enabled": true, "scaleFactor": 0.5}}, "color": "#adb5bd", "font": {"align": "top", "color": "#343a40", "size": 10, "strokeWidth": 0}, "from": "NPA", "label": "2 min 10 sec", "title": "Transition: NPA \u2192 Police Foundation Metro Station\nTrips (Case Frequency): 16\nAvg Time: 2 min 10 sec", "to": "Police Foundation Metro Station", "width": 2}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"forceAtlas2Based": {"gravitationalConstant": -50, "centralGravity": 0.01, "springLength": 100, "springConstant": 0.08}, "maxVelocity": 50, "solver": "forceAtlas2Based", "timestep": 0.35, "stabilization": {"iterations": 150}}, "edges": {"smooth": {"type": "curvedCW", "roundness": 0.15}}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
